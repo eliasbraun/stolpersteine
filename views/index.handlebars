@@ -1,11 +1,13 @@
 <h1 class="mb-3">Stolpersteine</h1>
 
-<form action="/" method="POST" enctype="multipart/form-data">
-    <input type="file" name="stolperstein" accept="image/*;capture=camera">
-    <button type="submit">Hochladen</button>
+<form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}">
+    <div id="open_camera"><i class="fas fa-camera"></i></div>
+    <input type="file" name="stolperstein" accept="image/*;capture=camera" id="stolperstein_input" capture>
+    <button type="submit" id="upload_btn">Hochladen</button>
 </form>
 
-<div class="bio" style="margin-top:5em;">
+
+<div class="bio" style="margin-top:5em;{{show_person}}">
     {{#if data}}
         <h4>{{data}}</h4>
     {{/if}}
@@ -23,5 +25,3 @@
     {{/if}}
     <h6>{{url}}</h6>
 </div>
-
-{{!-- <a href="/api/members" class="btn btn-light mt-4">Visit API</a> --}}

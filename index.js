@@ -30,6 +30,8 @@ app.get('/', (req, res) => {
   var description = person.description;  
   var fotos       = person.foto_list; // [0], [1], ...
   var url         = person.url;
+  var show_camera = "display: inline";  // show camera option
+  var show_person = "display: none";    // hide bio
 
   res.render('index', { // render index.handlebars
     name,
@@ -40,7 +42,9 @@ app.get('/', (req, res) => {
     destiny,
     description,
     fotos,
-    url
+    url,
+    show_camera,
+    show_person
   })
 });
 
@@ -59,6 +63,8 @@ app.get('/:id', (req, res) => {
     var description = person.description;  
     var fotos       = person.foto_list; // [0], [1], ...
     var url         = person.url;
+    var show_camera = "display: none";   // hide camera option
+    var show_person = "display: inline"; // show result
     
     res.render('index', { // render index.handlebars
         name,
@@ -69,7 +75,9 @@ app.get('/:id', (req, res) => {
         destiny,
         description,
         fotos,
-        url
+        url,
+        show_camera,
+        show_person
       }
     )
   } else {
@@ -96,7 +104,7 @@ app.post('/', (req, res) => {
     imageCalculation();
     async function imageCalculation() {
       var person_id    = "";
-      const data       = await recognizeImage(pathToImage); // -> Berechnet den Text auf dem Bild, auskommentieren, um billing zu entgehen 
+      const data       = await recognizeImage(pathToImage); // -> Berechnet den Text auf dem Bild, auskommentieren, um billing zu entgehen
       const data_split = data.split("\n"); // Hier wohne \n VORNAME NACHNAME 
       const data_name  = word_uppercase(data_split[1]); // Vorname Nachname
       const found      = biography.find((element) => element.name.includes(data_name));
