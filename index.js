@@ -16,35 +16,15 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main'})); // view engine is ha
 app.set('view engine', 'handlebars'); 
 
 // homepage route
-app.get('/', (req, res) => {
-  // get random person to display on index page
-  var index   = Math.floor(Math.random()*(biography.length));
-  var person  = biography[index];
-
-  var name        = person.name;  
-  var place       = person.place;  
-  var date        = person.date;  
-  var born        = person.born;  
-  var deportation = person.deportation;  
-  var destiny     = person.destiny;  
-  var description = person.description;  
-  var fotos       = person.foto_list; // [0], [1], ...
-  var url         = person.url;
-  var show_camera = "display: inline";  // show camera option
-  var show_person = "display: none";    // hide bio
+app.get('/', (req, res) => { // get random person to display on index page
+  var show_camera   = "display: inline";  // show camera option
+  var show_person   = "display: none";    // hide bio
+  var random_number = Math.floor(Math.random()*(9380)).toString(); // biography.length
 
   res.render('index', { // render index.handlebars
-    name,
-    place,
-    date, 
-    born,
-    deportation,
-    destiny,
-    description,
-    fotos,
-    url,
     show_camera,
-    show_person
+    show_person,
+    random_number
   })
 });
 
@@ -83,7 +63,6 @@ app.get('/:id', (req, res) => {
   } else {
     res.redirect('/not-found');
   }
-  
 });
 
 // storage 
@@ -116,14 +95,13 @@ app.post('/', (req, res) => {
       res.redirect(`/${person_id}`);
     }
   })
-})
+});
 
 async function recognizeImage(pathToImage) {
   const [result] = await client.textDetection(pathToImage);
   const detections = result.textAnnotations;
   return detections[0].description;
 }
-
 
 // init body parser middleware
 app.use(express.json()); 
@@ -134,7 +112,7 @@ app.use(express.static('public')); // for the styles
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 
 // Every Word As Uppercase
 function word_uppercase(str) {

@@ -1,38 +1,16 @@
 @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
-body{background:#ddd;}
-#open_camera {
-    background: #fff;
-    border: 1px solid lightgray;
-    border-radius: .3em;
-    padding: .5em 1em;
-    outline: none;
-    cursor: pointer;
-    display: block;
-    text-align: center;
-    width: 300px;
-    height: 300px;
-    background: gold;
-    margin: 0px auto;
-    box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 28px !important;
-    border: 1px dashed;
-    margin-bottom: 2em;
-}
-.fa-camera{position: absolute;top: 28%;font-size: 4em;left: 44%;}
-.fa-check-circle{position: absolute;top: 28%;font-size: 4em;left: 44%;color:white;}
-#upload_btn{
-    background: #fff;
-    border: 1px solid lightgray;
-    border-radius: .3em;
-    padding: .5em 1em;
-    outline: none;
-    display: block;
-    text-align: center;
-    width: 100%;
-    max-width: 300px;
-    margin: 0px auto;
-}
-
-input[type='file'] {
-    display: none;
-    opacity:0
-}
+body{background:#fff;}
+.smaller-container{max-width: 42em;}
+.header{color: #323232;text-decoration: none;margin-bottom: 1em;display: block;padding: .5em 1em;border-bottom: 1px solid lightgray;}
+.headline{font-size: 1.5em;color: #323232;text-decoration: none;}
+.headline:hover{color:#000;}
+.inner.cover{margin:2em 0em;}
+#open_camera {background: #fff;border-radius: .3em;padding: .5em 1em;outline: none;cursor: pointer;display: block;text-align: center;width: 300px;height: 300px;background: #fafafa;margin: 0px auto;box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)!important;border-color: lightgray;border: 1px dashed;margin-bottom: 2em;}
+#open_camera:hover > .fa-camera{color:#000;}
+.fa-camera{position: relative;top: 33%;left: 2%;font-size: 5em;color: #323232;}
+.fa-check-circle{position: relative;top: 33%;left: 2%;font-size: 5em;color:white;}
+#upload_btn{display: none; color:#323232; background: #fff;font-size: 1.5em;border: 1px solid lightgray;border-radius: .3em;padding: .5em 1em;margin-top:2em;outline: none;text-align: center;width: 100%;  max-width: 300px;margin: 0px auto;}
+#upload_btn:hover{background:#fafafa}
+.mt-auto{border-top: 1px solid lightgray;text-align: center;}
+#bio_btn{padding: 1em;font-size: 1.5em;text-align: center;text-decoration: none;}
+input[type='file'] {display: none;opacity:0}
