@@ -15,7 +15,7 @@ function handleFileSelect(evt) {
     output.push(escape(f.name));
   }
   camera_icon.className = "far fa-check-circle"; // checkmark instead of camera
-  camera_wrapper.setAttribute('style', 'box-shadow: none !important; background: #000;');
+  camera_wrapper.setAttribute('style', 'box-shadow: none !important; background: #323232;');
   upload_button.setAttribute('style', 'display: block;');
 }
 

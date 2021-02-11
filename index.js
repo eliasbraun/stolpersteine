@@ -8,7 +8,7 @@ const app       = express();
 const biography = require('./Biography');
 const multer    = require('multer'); // Where to store uploaded images etc. 
 const PORT      = 3000 || process.env.PORT;
-const vision    = require('@google-cloud/vision')    // Import the Google Cloud Vision library
+const vision    = require('@google-cloud/vision')    // Import Google Cloud Vision library
 const client    = new vision.ImageAnnotatorClient()  // Create a client
 
 // handlebars middleware
@@ -20,12 +20,14 @@ app.get('/', (req, res) => { // get random person to display on index page
   var show_camera   = "display: inline";  // show camera option
   var show_person   = "display: none";    // hide bio
   var random_number = Math.floor(Math.random()*(9380)).toString(); // biography.length
+  var url_exists    = biography.find((element) => element.url.includes(random_number));
+  random_number     = (url_exists) ? random_number : 1; // Some urls might not exist 
 
   res.render('index', { // render index.handlebars
     show_camera,
     show_person,
     random_number
-  })
+  });
 });
 
 // A person was found

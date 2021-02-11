@@ -1,35 +1,43 @@
+<body>
+    <main role="main" class="container">
+        <h1 class="mt-3"><a href="/" class="headline text-center"><i class="fas fa-square-full"></i> Stolperstein</a></h1>
+        <p class="lead">take a picture of any Stolperstein in berlin to learn more about the person's biography.</p>
+        <hr/>
 
-<div class="bio" style="margin-top:5em;{{show_person}}">
-    {{#if data}}
-        <h4>{{data}}</h4>
-    {{/if}}
-    <h4>{{name}}</h4>
-    <h6>{{place}}</h6>
-    <h6>{{date}}</h6>
-    <h6>{{born}}</h6>
-    <h6>{{deportation}}</h6>
-    <h6>{{destiny}}</h6>
-    <div>{{description}}</div>
-    {{#if fotos}}
-        {{#each fotos}}
-            <img src="{{this.foto}}"/>
-        {{/each}}
-    {{/if}}
-    <h6>{{url}}</h6>
-    <a href="/" class="back">Zurück</a>
-</div>
+        <div class="bio" style="margin-top:5em;{{show_person}}">
+            {{#if data}}
+                <h4>{{data}}</h4>
+            {{/if}}
+            <h4>{{name}}</h4>
+            <h6>{{place}}</h6>
+            <h6>{{date}}</h6>
+            <h6>{{born}}</h6>
+            <h6>{{deportation}}</h6>
+            <h6>{{destiny}}</h6>
+            <div>{{description}}</div>
+            <br>
+            {{#if fotos}}
+                {{#each fotos}}
+                    <img src="{{this.foto}}"/>
+                {{/each}}
+            {{/if}}
+            <h6>{{url}}</h6>
+            <br>
+        </div>
 
-<main role="main" class="inner cover">
-    <form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}">
-        <p class="lead">
+        <form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}">
+            <p class="lead">
+                <div id="open_camera"><i class="fas fa-camera"></i></div>
+                <input type="file" name="stolperstein" accept="image/*;capture=camera" id="stolperstein_input" capture>
+            </p>
+            <p class="lead"><button type="submit" id="upload_btn">get more information</button><br></p>
+        </form>
+    </main>
+    <footer class="footer text-center">
+        <a href="/{{random_number}}" id="bio_btn" style="{{show_camera}}">show a biography <i class="fas fa-random"></i></a>
+        <a href="/" id="back_btn" style="{{show_person}}">back</a>
+    </footer>
 
-        <div id="open_camera"><i class="fas fa-camera"></i></div>
-        <input type="file" name="stolperstein" accept="image/*;capture=camera" id="stolperstein_input" capture>
-        </p>
-        <p class="lead"><button type="submit" id="upload_btn">get more information</button></p>
-    </form>
-</main>
+    <script src="/js/index_frontend.js"></script>
 
-<footer class="mt-auto">
-    <a href="/{{random_number}}" id="bio_btn" style="{{show_camera}}">show a biography <i class="fas fa-random"></i></a>
-</footer>
+</body>
