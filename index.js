@@ -119,8 +119,6 @@ async function recognizeImage(pathToImage) {
 // init body parser middleware
 app.use(express.json()); 
 app.use(express.urlencoded({extended:false}));
-
-app.use('/api/members', require('./routes/api/members')); // All of the members API routes
 app.use(express.static('public')); // for the styles
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
