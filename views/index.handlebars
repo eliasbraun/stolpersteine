@@ -9,20 +9,28 @@
                 <h4>{{data}}</h4>
             {{/if}}
             <h4>{{name}}</h4>
-            <h6>{{place}}</h6>
-            <h6>{{date}}</h6>
-            <h6>{{born}}</h6>
-            <h6>{{deportation}}</h6>
-            <h6>{{destiny}}</h6>
-            <div>{{description}}</div>
-            <br>
+            <div class="row">
+                <div class="col-3 fw-500">place</div>
+                <div class="col-9">{{place}}</div>
+                <div class="col-3 fw-500" style="{{sh_date}}">laying</div>
+                <div class="col-9" style="{{sh_date}}">{{date}}</div>
+                <div class="col-3 fw-500">born</div>
+                <div class="col-9">{{born}}</div>
+                <div class="col-3 fw-500" style="{{sh_deportation}}">deportation</div>
+                <div class="col-9" style="{{sh_deportation}}">{{deportation}}</div>
+                <div class="col-3 fw-500">murder</div>
+                <div class="col-9">{{destiny}}</div>
+            </div>
             {{#if fotos}}
                 {{#each fotos}}
-                    <img src="{{this.foto}}"/>
+                    <img src="{{this.foto}}" class="image_person"/>
                 {{/each}}
             {{/if}}
-            <h6>{{url}}</h6>
-            <br>
+            <div class="row mt-3">
+                <div class="col">{{description}}</div>
+            </div>
+            <a href="{{url}}" class="source" target="_blank" rel="noopener noreferrer"><i class="fas fa-link"></i>go to source</a>
+            <br><br>
         </div>
 
         <form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}">
@@ -30,7 +38,7 @@
                 <div id="open_camera"><i class="fas fa-camera"></i></div>
                 <input type="file" name="stolperstein" accept="image/*;capture=camera" id="stolperstein_input" capture>
             </p>
-            <p class="lead"><button type="submit" id="upload_btn">get more information</button><br></p>
+            <p class="lead"><button type="submit" id="upload_btn">submit</button><br></p>
         </form>
     </main>
     <footer class="footer text-center">

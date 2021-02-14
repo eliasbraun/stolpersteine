@@ -36,27 +36,33 @@ app.get('/:id', (req, res) => {
   const search_url  = `https://www.stolpersteine-berlin.de/de/biografie/${id}`;
   const person      = biography.find((element) => element.url.includes(search_url));
   if(person) {
-    var name        = person.name;  
-    var place       = person.place;  
-    var date        = person.date;  
-    var born        = person.born;  
-    var deportation = person.deportation;  
-    var destiny     = person.destiny;  
-    var description = person.description;  
-    var fotos       = person.foto_list; // [0], [1], ...
-    var url         = person.url;
-    var show_camera = "display: none";   // hide camera option
-    var show_person = "display: inline"; // show result
+    var name           = person.name;  
+    var place          = person.place;
+    var date           = person.date; 
+    var sh_date        = (date == "") ? "display: none;" : "display: block;";
+    var born           = person.born;  
+    var deportation    = person.deportation;
+    var sh_deportation = (deportation == "") ? "display: none" : "display: block;";
+    var destiny        = person.destiny;  
+    var description    = person.description;  
+    var fotos          = person.foto_list; // [0], [1], ...
+    var fotos_rechte   = person.foto_recht; // [0], [1], ...
+    var url            = person.url;
+    var show_camera    = "display: none";   // hide camera option
+    var show_person    = "display: inline"; // show result
     
     res.render('index', { // render index.handlebars
         name,
         place,
-        date, 
+        date,
+        sh_date,
         born,
         deportation,
+        sh_deportation,
         destiny,
         description,
         fotos,
+        fotos_rechte,
         url,
         show_camera,
         show_person
@@ -73,7 +79,9 @@ const storage = multer.diskStorage( {
     cb(null, "./public/uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    var extension         = file.originalname.split('.').pop();
+    var random_image_name = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + "." + extension; // abDc132.[ext]
+    cb(null, `${random_image_name}`); // file.originalname
   }
 });
 const upload = multer({storage}).single("stolperstein");
@@ -81,14 +89,18 @@ const upload = multer({storage}).single("stolperstein");
 // user uploads img called from index.html
 app.post('/', (req, res) => {
   upload(req, res, err => {
-    var pathToImage  = './public/uploads/' + req.file.originalname;
+    var pathToImage  = `./public/uploads/` + req.file.filename; //+ req.file.originalname;
     imageCalculation();
     async function imageCalculation() {
       var person_id    = "";
       const data       = await recognizeImage(pathToImage); // -> Berechnet den Text auf dem Bild, auskommentieren, um billing zu entgehen
       const data_split = data.split("\n"); // Hier wohne \n VORNAME NACHNAME 
-      const data_name  = word_uppercase(data_split[1]); // Vorname Nachname
-      const found      = biography.find((element) => element.name.includes(data_name));
+      var data_name    = word_uppercase(data_split[1]); // Vorname Nachname
+      var found        = biography.find((element) => element.name.includes(data_name));
+      if(!found) { // i.e. "Hier wohnte \n und arbeitete \n Vorname Nachname"
+        data_name = word_uppercase(data_split[2]); // Vorname Nachname
+        found     = biography.find((element) => element.name.includes(data_name));
+      }
       if(found) { // get id, so we can redirect to that person
         const person_url = found.url; // "https://www.stolpersteine-berlin.de/de/biografie/3416
         const url_arr    = person_url.split("/"); 
