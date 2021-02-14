@@ -4,14 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy" : "gh-pages -d stolpersteine",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://eliasbraun.github.io/stolpersteine",
   "dependencies": {
     "@google-cloud/vision": "^2.3.0",
     "express": "^4.17.1",
