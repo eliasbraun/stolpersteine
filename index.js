@@ -1,4 +1,3 @@
-// Google API übersicht Abfragenmenge: https://console.cloud.google.com/apis/dashboard?project=stolpersteine-296816&supportedpurview=project&show=all
 if(process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
