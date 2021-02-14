@@ -1,12 +1,13 @@
 if(process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
+const testing   = false; 
 const express   = require('express');
 const exphbs    = require('express-handlebars');
 const app       = express();
 const biography = require('./Biography');
 const multer    = require('multer'); // Where to store uploaded images etc. 
-const PORT      = 3000 || process.env.PORT;
+const PORT      = (testing) ? 3000 : process.env.PORT;
 const vision    = require('@google-cloud/vision')    // Import Google Cloud Vision library
 const client    = new vision.ImageAnnotatorClient()  // Create a client
 
