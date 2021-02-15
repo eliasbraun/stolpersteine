@@ -90,8 +90,7 @@ const upload = multer({storage}).single("stolperstein");
 // user uploads img called from index.html
 app.post('/', (req, res) => {
   upload(req, res, err => {
-    console.log(req.file);
-    var pathToImage  = `./public/uploads/` + req.file.filename; //+ req.file.originalname;
+    var pathToImage  =  './public/uploads/x78fo9i7r9ptu0h1fwrlf.jpg'; // `./public/uploads/` + req.file.filename;
     imageCalculation();
     async function imageCalculation() {
       var person_id    = "";
