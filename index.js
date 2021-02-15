@@ -1,8 +1,11 @@
 if(process.env.NODE_ENV !== "production") {
   module.exports = require('dotenv').config();
 } else { // production mode
-  module.exports = require('./keys_prod');
+  // module.exports = require('./keys_prod');
 }
+
+// console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
 const express   = require('express');
 const exphbs    = require('express-handlebars');
 const app       = express();
