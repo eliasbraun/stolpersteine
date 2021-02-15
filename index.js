@@ -1,5 +1,7 @@
 if(process.env.NODE_ENV !== "production") {
-  require('dotenv').config();
+  module.exports = require('dotenv').config();
+} else { // production mode
+  module.exports = require('./keys_prod');
 }
 const express   = require('express');
 const exphbs    = require('express-handlebars');
