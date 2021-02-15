@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== "production") {
   module.exports = require('./keys_prod');
 }
 
-// console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 const express   = require('express');
 const exphbs    = require('express-handlebars');
