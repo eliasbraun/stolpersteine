@@ -1,9 +1,6 @@
 if(process.env.NODE_ENV !== "production") {
   module.exports = require('dotenv').config();
-} 
-// else { // production mode
-//   module.exports = require('./keys_prod');
-// }
+}
 
 const express   = require('express');
 const exphbs    = require('express-handlebars');
@@ -92,7 +89,7 @@ const upload = multer({storage}).single("stolperstein");
 // user uploads img called from index.html
 app.post('/', (req, res) => {
   upload(req, res, err => {
-    var pathToImage  =  './public/uploads/x78fo9i7r9ptu0h1fwrlf.jpg'; // `./public/uploads/` + req.file.filename;
+    var pathToImage  =  `./public/uploads/` + req.file.filename;
     imageCalculation();
     async function imageCalculation() {
       var person_id    = "";
