@@ -21,7 +21,7 @@ app.get('/', (req, res) => { // get random person to display on index page
   var show_person   = "display: none";    // hide bio
   var random_number = Math.floor(Math.random()*(9380)).toString(); // biography.length
   var url_exists    = biography.find((element) => element.url.includes(random_number));
-  random_number     = (url_exists) ? random_number : 1; // Some urls might not exist 
+  random_number     = (url_exists) ? random_number : 7998; // Some urls might not exist 
 
   res.render('index', { // render index.handlebars
     show_camera,
@@ -30,7 +30,7 @@ app.get('/', (req, res) => { // get random person to display on index page
   });
 });
 
-// A person was found
+// a person was found
 app.get('/:id', (req, res) => {
   const id          = req.params.id; 
   const search_url  = `https://www.stolpersteine-berlin.de/de/biografie/${id}`;
@@ -50,6 +50,9 @@ app.get('/:id', (req, res) => {
     var url            = person.url;
     var show_camera    = "display: none";   // hide camera option
     var show_person    = "display: inline"; // show result
+    var random_number = Math.floor(Math.random()*(9380)).toString(); // biography.length
+    var url_exists    = biography.find((element) => element.url.includes(random_number));
+    random_number     = (url_exists) ? random_number : 7998; // Some urls might not exist 
     
     res.render('index', { // render index.handlebars
         name,
@@ -65,13 +68,20 @@ app.get('/:id', (req, res) => {
         fotos_rechte,
         url,
         show_camera,
-        show_person
+        show_person,
+        random_number
       }
     )
   } else {
-    res.redirect('/not-found');
+    var random_number = Math.floor(Math.random()*(9380)).toString(); // biography.length
+    var url_exists    = biography.find((element) => element.url.includes(random_number));
+    random_number     = (url_exists) ? random_number : 7998; // Some urls might not exist 
+    res.render('not_found', { // render index.handlebars
+      random_number
+    });
   }
 });
+
 
 // storage 
 const storage = multer.diskStorage( {
@@ -93,16 +103,17 @@ app.post('/', (req, res) => {
     imageCalculation();
     async function imageCalculation() {
       var person_id    = "";
-      const data       = await recognizeImage(pathToImage); // -> Berechnet den Text auf dem Bild, auskommentieren, um billing zu entgehen
-      const data_split = data.split("\n"); // Hier wohne \n VORNAME NACHNAME 
-      var data_name    = word_uppercase(data_split[1]); // Vorname Nachname
+      var data         = await recognizeImage(pathToImage); //computes text on image
+      data             = data.replace(/(\r\n|\n|\r)/gm, " "); // complete text in one line
+      var data_split   = data.split(" ");
+      var data_name    = word_uppercase(data_split[2]+ " " + data_split[3]); // first and last name
       var found        = biography.find((element) => element.name.includes(data_name));
-      if(!found) { // i.e. "Hier wohnte \n und arbeitete \n Vorname Nachname"
-        data_name = word_uppercase(data_split[2]); // Vorname Nachname
+      if(!found) { // sometimes name is not in third position
+        data_name = word_uppercase(data_split[4] + " " + data_split[4]);
         found     = biography.find((element) => element.name.includes(data_name));
       }
       if(found) { // get id, so we can redirect to that person
-        const person_url = found.url; // "https://www.stolpersteine-berlin.de/de/biografie/3416
+        const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
         const url_arr    = person_url.split("/"); 
         person_id        = url_arr[(url_arr.length)-1]; // Letztes Element ist die id
       }
@@ -112,8 +123,9 @@ app.post('/', (req, res) => {
 });
 
 async function recognizeImage(pathToImage) {
-  const [result] = await client.textDetection(pathToImage);
-  const detections = result.textAnnotations;
+  const [result]    = await client.textDetection(pathToImage);
+  const detections  = result.textAnnotations;
+
   return detections[0].description;
 }
 
@@ -126,7 +138,7 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 
 // ------------------------------------------------------------------------------------
 
-// Every Word As Uppercase
+// Makes every word's first letter uppercase
 function word_uppercase(str) {
   var str_arr = str.toLowerCase().split(' ');
   for (var i = 0; i < str_arr.length; i++) {
