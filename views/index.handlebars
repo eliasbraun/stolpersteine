@@ -1,4 +1,5 @@
 <body>
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     <main role="main" class="container">
         <h1 class="mt-3"><a href="/" class="headline text-center"><i class="fas fa-square-full"></i> Stolperstein</a></h1>
         <p class="lead">take a picture of any Stolperstein in berlin to learn more about the person's biography.</p>
@@ -33,12 +34,12 @@
             <br><br>
         </div>
 
-        <form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}">
+        <form action="/" method="POST" enctype="multipart/form-data" style="{{show_camera}}" class="image_form">
             <p class="lead">
                 <div id="open_camera"><i class="fas fa-camera"></i></div>
                 <input type="file" name="stolperstein" accept="image/*;capture=camera" id="stolperstein_input" capture>
             </p>
-            <p class="lead"><button type="submit" id="upload_btn">submit</button><br></p>
+            <p class="lead"><button type="submit" id="upload_btn" onclick="loadSpinner();">submit</button><br></p>
         </form>
     </main>
     <footer class="footer text-center">

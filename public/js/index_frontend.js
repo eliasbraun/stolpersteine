@@ -19,4 +19,11 @@ function handleFileSelect(evt) {
   upload_button.setAttribute('style', 'display: block;');
 }
 
+// animate loading spinner 
+function loadSpinner() {
+  document.querySelector(".lds-roller").setAttribute('style', 'display: inline-block;');
+  document.querySelector(".container").setAttribute('style', 'filter: blur(2px);');
+  document.querySelector(".image_form").submit();
+}
+
 document.getElementById('stolperstein_input').addEventListener('change', handleFileSelect, false);
