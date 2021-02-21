@@ -104,6 +104,7 @@ app.post('/', (req, res) => {
     async function imageCalculation() {
       var person_id    = "";
       var data         = await recognizeImage(pathToImage); //computes text on image
+      console.log(data);
       data             = data.replace(/(\r\n|\n|\r)/gm, " "); // complete text in one line
       var data_split   = data.split(" ");
       var data_name    = word_uppercase(data_split[2]+ " " + data_split[3]); // first and last name
