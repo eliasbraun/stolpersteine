@@ -107,9 +107,10 @@ app.post('/', (req, res) => {
       rows.forEach(row => {
         var elements = row.split(" "); // to get first and last name 
         if(elements.length > 1 && !found) {
-          var possible_firstname = elements[0];
-          var possible_lastname  = elements[1];
-          var data_name          = uc_first(possible_firstname+ " " + possible_lastname); // first and last name
+          var data_name    = '';
+          elements.forEach(row_element => {
+            data_name += row_element + " " // i.e. Dr. firstname lastname, or just firstname lastname 
+          });
           var found        = biography.find((bio) => bio.name.includes(data_name));
           if(found) {
             const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
