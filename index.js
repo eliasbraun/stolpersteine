@@ -5,7 +5,7 @@ if(process.env.NODE_ENV !== "production") {
 const express   = require('express');
 const exphbs    = require('express-handlebars');
 const app       = express();
-const biography = require('./Biography');
+const biography = require('./Biography_old');
 const multer    = require('multer'); // Where to store uploaded images etc. 
 const PORT      = process.env.PORT || 80;
 const vision    = require('@google-cloud/vision')    // Import Google Cloud Vision library
@@ -112,7 +112,8 @@ app.post('/', (req, res) => {
             data_name += row_element + " " // i.e. Dr. firstname lastname, or just firstname lastname 
           });
           data_name = data_name.substring(0, data_name.length - 1); // remove last space
-          var found        = biography.find((bio) => bio.name.includes(uc_first(data_name)));
+          console.log(`looking for ${data_name}`)
+          var found = biography.find((bio) => bio.name.includes(uc_first(data_name)));
           if(found) {
             const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
             const url_arr    = person_url.split("/"); 
