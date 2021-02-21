@@ -5,7 +5,7 @@ if(process.env.NODE_ENV !== "production") {
 const express   = require('express');
 const exphbs    = require('express-handlebars');
 const app       = express();
-const biography = require('./Biography_old');
+const biography = require('./Biography');
 const multer    = require('multer'); // Where to store uploaded images etc. 
 const PORT      = process.env.PORT || 80;
 const vision    = require('@google-cloud/vision')    // Import Google Cloud Vision library
