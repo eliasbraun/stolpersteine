@@ -102,23 +102,23 @@ app.post('/', (req, res) => {
     var pathToImage  =  `./public/uploads/` + req.file.filename;
     imageCalculation();
     async function imageCalculation() {
-      var person_id    = "";
-      var data         = await recognizeImage(pathToImage); //computes text on image
-      console.log(data);
-      data             = data.replace(/(\r\n|\n|\r)/gm, " "); // complete text in one line
-      var data_split   = data.split(" ");
-      var data_name    = word_uppercase(data_split[2]+ " " + data_split[3]); // first and last name
-      var found        = biography.find((element) => element.name.includes(data_name));
-      if(!found) { // sometimes name is not in third position
-        data_name = word_uppercase(data_split[4] + " " + data_split[4]);
-        found     = biography.find((element) => element.name.includes(data_name));
-      }
-      if(found) { // get id, so we can redirect to that person
-        const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
-        const url_arr    = person_url.split("/"); 
-        person_id        = url_arr[(url_arr.length)-1]; // Letztes Element ist die id
-      }
-      res.redirect(`/${person_id}`);
+      var data  = await recognizeImage(pathToImage); //computes text on image
+      var rows  = data.split('\n');
+      rows.forEach(row => {
+        var elements = row.split(" "); // to get first and last name 
+        if(elements.length > 1 && !found) {
+          var possible_firstname = elements[0];
+          var possible_lastname  = elements[1];
+          var data_name          = uc_first(possible_firstname+ " " + possible_lastname); // first and last name
+          var found        = biography.find((bio) => bio.name.includes(data_name));
+          if(found) {
+            const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
+            const url_arr    = person_url.split("/"); 
+            const person_id  = url_arr[(url_arr.length)-1]; // Letztes Element ist die id
+            res.redirect(`/${person_id}`);
+          }
+        }
+      });
     }
   })
 });
@@ -140,7 +140,7 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 // ------------------------------------------------------------------------------------
 
 // Makes every word's first letter uppercase
-function word_uppercase(str) {
+function uc_first(str) {
   var str_arr = str.toLowerCase().split(' ');
   for (var i = 0; i < str_arr.length; i++) {
     str_arr[i] = str_arr[i].charAt(0).toUpperCase() + str_arr[i].substring(1);     
