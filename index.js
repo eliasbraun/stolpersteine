@@ -82,7 +82,6 @@ app.get('/:id', (req, res) => {
   }
 });
 
-
 // storage 
 const storage = multer.diskStorage( {
   destination: (req, file, cb) => {
@@ -112,7 +111,7 @@ app.post('/', (req, res) => {
             data_name += row_element + " " // i.e. Dr. firstname lastname, or just firstname lastname 
           });
           data_name = data_name.substring(0, data_name.length - 1); // remove last space
-          console.log(`looking for ${data_name}`)
+          console.log(`looking for ${uc_first(data_name)}`)
           var found = biography.find((bio) => bio.name.includes(uc_first(data_name)));
           if(found) {
             const person_url = found.url; // i.e. "https://www.stolpersteine-berlin.de/de/biografie/3416
@@ -127,7 +126,7 @@ app.post('/', (req, res) => {
 });
 
 async function recognizeImage(pathToImage) {
-  const [result]    = await client.textDetection(pathToImage);
+  const [result]    = await client.textDetection(pathToImage, image_context={"language_hints": ["de"]});
   const detections  = result.textAnnotations;
 
   return detections[0].description;
